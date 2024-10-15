@@ -20,74 +20,52 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.ItemSelected {
-    TextView tvName,tvPhone,tvDate;
-    EditText etName,etPhone;
-    ImageView ivContact;
-    Button btnAdd;
+    public static ArrayList<Person> people;
+    TextView tvDate;
     String CurrentDate;
     Calendar calendar=Calendar.getInstance();
     FragmentManager fragmentManager;
     listFrag listFrag;
+    detailFrag detailFrag;
     FragmentContainerView containerViewPerson, containerViewDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-
+        tvDate=findViewById(R.id.tvdate);
+        fragmentManager=this.getSupportFragmentManager();
         //sets the current date
         CurrentDate= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         tvDate.setText(CurrentDate);
         listFrag =(listFrag)fragmentManager.findFragmentById(R.id.listFrag);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(etName.getText().toString().isEmpty()||etPhone.getText().toString().isEmpty())
-                    Toast.makeText(MainActivity.this, "please fillup all fields !!!", Toast.LENGTH_SHORT).show();
-                else {
-                    ApplicationClass.people.add(new Person(etName.getText().toString().trim(), etPhone.getText().toString().trim()));
-                    Toast.makeText(MainActivity.this, "New person was added successfuly..", Toast.LENGTH_SHORT).show();
-                    etName.setText(null);
-                    etPhone.setText(null);
-                    listFrag.notifyDataSetChanged();
-                }
-            }
-        });
-        onItemClicked(0);
-        ivContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String phone=tvPhone.getText().toString().trim();
-                Intent intent=new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone));
-                startActivity(intent);
-            }
-        });
+        initPeople();
+        detailFrag = (detailFrag) fragmentManager.findFragmentById(R.id.detailFrag);
+        //detailFrag.updateTexts(people.get(0).getName(), people.get(0).getPhone());
     }
 
-    private void initViews() {
-        tvDate=findViewById(R.id.tvdate);
-        fragmentManager=this.getSupportFragmentManager();
-        //init views in PersonContainerView.
-        containerViewPerson=findViewById(R.id.addPersonFrag);
-        etName=containerViewPerson.findViewById(R.id.etName);
-        etPhone=containerViewPerson.findViewById(R.id.etPhone);
-        btnAdd=containerViewPerson.findViewById(R.id.btnAdd);
-        //init views in DetailContainerView.
-        containerViewDetail=findViewById(R.id.detailFrag);
-        tvName=containerViewDetail.findViewById(R.id.tvName);
-        tvPhone=containerViewDetail.findViewById(R.id.tvPhone);
-        ivContact=containerViewDetail.findViewById(R.id.ivContact);
+    private void initPeople() {
+        people=new ArrayList<>();
+        people.add(new Person("Adil Emam","0526487952"));
+        people.add(new Person("Ahmad Zake","0526487666"));
+        people.add(new Person("Yonis Shalaby","0526487333"));
+        people.add(new Person("Saeed Salih","0526487111"));
+        people.add(new Person("Adel Emam","0526487952"));
+        people.add(new Person("Ahmad Zake","0526487666"));
+        people.add(new Person("Yonis Shalaby","0526487333"));
+        people.add(new Person("Saeed Salih","0526487111"));
     }
 
     @Override
     public void onItemClicked(int Index) {
-        if(ApplicationClass.people.size()==0)
-            return;
-        tvName.setText(ApplicationClass.people.get(Index).getName());
-        tvPhone.setText(ApplicationClass.people.get(Index).getPhone());
+        if(!people.isEmpty()) {
+            detailFrag.updateTexts(people.get(Index).getName(), people.get(Index).getPhone());
+        }
+        else
+            return ;
     }
 }

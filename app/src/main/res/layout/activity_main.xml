@@ -23,6 +23,7 @@
         tools:context=".MainActivity">
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/listFrag"
+            android:name="com.example.fragments_phonebook.listFrag"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -36,6 +37,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/detailFrag"
+                android:name="com.example.fragments_phonebook.detailFrag"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
@@ -43,6 +45,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/addPersonFrag"
+                android:name="com.example.fragments_phonebook.AddPersonFrag"
                 android:layout_weight="3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class listFrag extends Fragment {
     public static RecyclerView recyclerView;
     public static RecyclerView.Adapter myAdapter;
@@ -32,13 +34,11 @@ public class listFrag extends Fragment {
         layoutManager=new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        myAdapter=new PersonAdapter(this.getActivity(),people);
+        myAdapter=new PersonAdapter(this.getActivity(),MainActivity.people);
         recyclerView.setAdapter(myAdapter);
         return view;
     }
-    public static void update(){
-        myAdapter.notifyDataSetChanged();
-    }
+
     public static void notifyDataSetChanged(){
         myAdapter.notifyDataSetChanged();
     }

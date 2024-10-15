@@ -18,6 +18,8 @@ public class ApplicationClass extends Application {
         people.add(new Person("Ahmad Zake","0526487666"));
         people.add(new Person("Yonis Shalaby","0526487333"));
         people.add(new Person("Saeed Salih","0526487111"));
-
+    }
+    public static ArrayList<Person> getPeople(){
+        return people;
     }
 }
